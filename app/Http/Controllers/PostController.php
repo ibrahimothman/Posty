@@ -9,7 +9,11 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::with(['likes' => function($like) {
+        //     $like->where('user_id', auth()->id());
+        // }])->paginate(5);
+
+        $posts = Post::with(['user', 'likes'])->paginate(10);
         return view('posts.index', [
             'posts' => $posts,
         ]);
@@ -26,5 +30,13 @@ class PostController extends Controller
         return redirect()->route('posts');
 
 
+    }
+
+    public function destroy(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+
+        return back();
     }
 }
