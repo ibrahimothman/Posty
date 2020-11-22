@@ -33,5 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/{user:username}/posts', [UserPostController::class, 'index'])->name('users.posts');
 });
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
